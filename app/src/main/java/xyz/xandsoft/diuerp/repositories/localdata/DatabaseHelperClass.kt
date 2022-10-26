@@ -2,33 +2,77 @@ package xyz.xandsoft.diuerp.repositories.localdata
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import xyz.xandsoft.diuerp.repositories.datamodels.ProductDataModel
 
 class DatabaseHelperClass(private val context: Context) {
 
     val databaseHelper = DatabaseHelper()
 
-    fun insertIntoDatabase() {
-        val writableDatabase = databaseHelper.writableDatabase
-        val contentValues = ContentValues()
-        writableDatabase.insert(databaseHelper.TABLE_NAME, null, contentValues)
+    val writableDatabase = databaseHelper.writableDatabase
+    val readableDatabase = databaseHelper.readableDatabase
 
+    fun insertIntoProductTable(productDataModel: ProductDataModel) {
+        val contentValues = ContentValues()
+        writableDatabase.insert(databaseHelper.PRODUCT_TABLE_NAME, null, contentValues)
     }
+
+    fun insertIntoSellTable() {
+        val contentValues = ContentValues()
+        writableDatabase.insert(databaseHelper.SELL_TABLE, null, contentValues)
+    }
+
+    fun getAllItems(): Cursor {
+        val retrieveTables = arrayOf(
+            databaseHelper.COLUMN_ID,
+            databaseHelper.COLUMN_PRODUCT_NAME,
+            databaseHelper.COLUMN_PRODUCT_INSTOCK
+        )
+
+        return readableDatabase.query(
+            databaseHelper.PRODUCT_TABLE_NAME,
+            retrieveTables,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+    }
+
 
     inner class DatabaseHelper : SQLiteOpenHelper(context, "accounts_db", null, 1) {
 
-        val TABLE_NAME = "product_table"
+        val PRODUCT_TABLE_NAME = "product_table"
         val COLUMN_ID = "id"
         val COLUMN_PRODUCT_NAME = "product_name"
         val COLUMN_PRODUCT_PRICE = "product_price"
         val COLUMN_PRODUCT_INSTOCK = "in_stock"
+        val COLUMN_PRODUCT_BUYING_DATE = "buying_date"
+        val COLUMN_TOTAL_PURCHASE_AMOUNT = "total_purchase_amount"
+
+        val SELL_TABLE = "sell_table"
+        val COLUMN_PRODUCT_ID = "product_id"
+        val COLUMN_SELLING_QUANTITY = "selling_quantity"
+        val COLUMN_SELLING_PRICE = "selling_price"
+        val COLUMN_SELL_AMOUNT = "selling_amount"
 
         override fun onCreate(sqLiteDatabase: SQLiteDatabase?) {
-            val query =
-                "CREATE TABLE $TABLE_NAME($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                        "$COLUMN_PRODUCT_NAME VARCHAR(128), $COLUMN_PRODUCT_PRICE INTEGER, $COLUMN_PRODUCT_INSTOCK INTEGER);"
-            sqLiteDatabase?.execSQL(query)
+            val queryProductTable =
+                "CREATE TABLE $PRODUCT_TABLE_NAME($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "$COLUMN_PRODUCT_NAME VARCHAR(128), $COLUMN_PRODUCT_PRICE INTEGER, " +
+                        "$COLUMN_PRODUCT_INSTOCK INTEGER, $COLUMN_PRODUCT_BUYING_DATE VARCHAR(10), " +
+                        "$COLUMN_TOTAL_PURCHASE_AMOUNT INTEGER);"
+
+            val querySellTable =
+                "CREATE TABLE $SELL_TABLE($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "$COLUMN_PRODUCT_ID INTEGER, $COLUMN_SELLING_QUANTITY INTEGER, " +
+                        "$COLUMN_SELLING_PRICE INTEGER, $COLUMN_SELL_AMOUNT INTEGER);"
+
+            sqLiteDatabase?.execSQL(queryProductTable)
+            sqLiteDatabase?.execSQL(querySellTable)
         }
 
         override fun onUpgrade(sqliteDatabase: SQLiteDatabase?, p1: Int, p2: Int) {
