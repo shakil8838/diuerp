@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'xyz.xandsoft.diuerp'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "xyz.xandsoft.diuerp"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -46,8 +46,11 @@ dependencies {
 
     // CameraX core library using the camera2 implementation
     def camerax_version = "1.2.0-beta02"
+    //noinspection GradleDependency
     implementation "androidx.camera:camera-camera2:${camerax_version}"
+    //noinspection GradleDependency
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    //noinspection GradleDependency
     implementation "androidx.camera:camera-view:${camerax_version}"
 
     // Firebase
@@ -69,19 +72,19 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // Material Design
-    implementation 'com.google.android.material:material:1.8.0-alpha01'
+    implementation 'com.google.android.material:material:1.8.0-alpha02'
 
     //Kodein Dependency Injection
     implementation "org.kodein.di:kodein-di-generic-jvm:6.2.1"
     implementation "org.kodein.di:kodein-di-framework-android-x:6.2.1"
 
     //Android Navigation Architecture
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.2"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
 
-    implementation 'com.xwray:groupie:2.3.0'
+    /*implementation 'com.xwray:groupie:2.3.0'
     implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
-    implementation 'com.xwray:groupie-databinding:2.3.0'
+    implementation 'com.xwray:groupie-databinding:2.3.0'*/
 
     implementation "androidx.preference:preference-ktx:1.2.0"
 
@@ -92,8 +95,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
 
     // Android X navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
     // [END] Custom libraries
 
