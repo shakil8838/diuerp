@@ -2,6 +2,8 @@ package xyz.xandsoft.diuerp.repositories.network
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import xyz.xandsoft.diuerp.interfaces.OnAuthCallBack
 import xyz.xandsoft.diuerp.repositories.datamodels.UserDataModel
 
@@ -10,20 +12,22 @@ object FirebaseRepository {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val databaseReference = FirebaseDatabase.getInstance().reference
 
-    fun letLogin(onAuthCallBack: OnAuthCallBack, email: String, password: String) {
+    suspend fun letLogin(onAuthCallBack: OnAuthCallBack, email: String, password: String) {
 
         onAuthCallBack.onAuthStarted()
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) onAuthCallBack.onAuthSuccess()
-            }
-            .addOnFailureListener { e ->
-                onAuthCallBack.onAuthFailed(e.message!!)
-            }
+        withContext(Dispatchers.IO) {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) onAuthCallBack.onAuthSuccess()
+                }
+                .addOnFailureListener { e ->
+                    onAuthCallBack.onAuthFailed(e.message!!)
+                }
+        }
     }
 
-    fun letUserRegister(
+    suspend fun letUserRegister(
         onAuthCallBack: OnAuthCallBack,
         userDataModel: UserDataModel,
         password: String
@@ -31,16 +35,18 @@ object FirebaseRepository {
 
         onAuthCallBack.onAuthStarted()
 
-        firebaseAuth.createUserWithEmailAndPassword(userDataModel.userEmail!!, password)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    onAuthCallBack.onAuthSuccess()
-                    addUserIntoNode(userDataModel)
+        withContext(Dispatchers.IO) {
+            firebaseAuth.createUserWithEmailAndPassword(userDataModel.userEmail!!, password)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        onAuthCallBack.onAuthSuccess()
+                        addUserIntoNode(userDataModel)
+                    }
                 }
-            }
-            .addOnFailureListener {
-                onAuthCallBack.onAuthFailed(it.message!!)
-            }
+                .addOnFailureListener {
+                    onAuthCallBack.onAuthFailed(it.message!!)
+                }
+        }
     }
 
     private fun addUserIntoNode(userDataModel: UserDataModel) {

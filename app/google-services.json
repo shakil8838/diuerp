@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "146765858465",
+    "project_id": "diuerp-3fa95",
+    "storage_bucket": "diuerp-3fa95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146765858465:android:1dd63b464d3e2e4118d2e0",
+        "android_client_info": {
+          "package_name": "xyz.xandsoft.diuerp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146765858465-o20nt7g2n25vfbhs134rta6qveisfu9a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-r52J6iJK0OV7HqjQcrstk5IdqDfr80c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146765858465-o20nt7g2n25vfbhs134rta6qveisfu9a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
