@@ -8,27 +8,39 @@ import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import xyz.xandsoft.diuerp.R
 import xyz.xandsoft.diuerp.ui.fragments.LoginFragment
 
-class AuthActivity : AppCompatActivity(), AuthStateListener {
+class AuthActivity : AppCompatActivity() {
+
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var authListener: AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
-        supportFragmentManager.beginTransaction().replace(R.id.auth_container, LoginFragment())
-            .commit()
+        authListener = AuthStateListener { firebaseAuth ->
+            if (firebaseAuth.currentUser != null) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.auth_container, LoginFragment())
+                    .commit()
+            }
+        }
     }
 
-    override fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {
+    override fun onStart() {
+        super.onStart()
 
-        if (firebaseAuth.currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        } else {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.auth_container, LoginFragment())
-                .commit()
-        }
+        // Attach the listener
+        firebaseAuth.addAuthStateListener(authListener)
+    }
 
+    override fun onStop() {
+        super.onStop()
+
+        // Remove the listener
+        firebaseAuth.removeAuthStateListener(authListener)
     }
 
 }

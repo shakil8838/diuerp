@@ -5,6 +5,8 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import xyz.xandsoft.diuerp.repositories.datamodels.ProductDataModel
 
 class DatabaseHelperClass(private val context: Context) {
@@ -14,32 +16,40 @@ class DatabaseHelperClass(private val context: Context) {
     val writableDatabase = databaseHelper.writableDatabase
     val readableDatabase = databaseHelper.readableDatabase
 
-    fun insertIntoProductTable(productDataModel: ProductDataModel) {
-        val contentValues = ContentValues()
-        writableDatabase.insert(databaseHelper.PRODUCT_TABLE_NAME, null, contentValues)
+    suspend fun insertIntoProductTable(productDataModel: ProductDataModel) {
+        withContext(Dispatchers.IO) {
+            val contentValues = ContentValues()
+
+            writableDatabase.insert(databaseHelper.PRODUCT_TABLE_NAME, null, contentValues)
+        }
     }
 
-    fun insertIntoSellTable() {
-        val contentValues = ContentValues()
-        writableDatabase.insert(databaseHelper.SELL_TABLE, null, contentValues)
+    suspend fun insertIntoSellTable() {
+        withContext(Dispatchers.IO) {
+            val contentValues = ContentValues()
+            writableDatabase.insert(databaseHelper.SELL_TABLE, null, contentValues)
+        }
     }
 
-    fun getAllItems(): Cursor {
+    suspend fun getAllItems(): Cursor {
+
         val retrieveTables = arrayOf(
             databaseHelper.COLUMN_ID,
             databaseHelper.COLUMN_PRODUCT_NAME,
             databaseHelper.COLUMN_PRODUCT_INSTOCK
         )
 
-        return readableDatabase.query(
-            databaseHelper.PRODUCT_TABLE_NAME,
-            retrieveTables,
-            null,
-            null,
-            null,
-            null,
-            null
-        )
+        return withContext(Dispatchers.IO) {
+            readableDatabase.query(
+                databaseHelper.PRODUCT_TABLE_NAME,
+                retrieveTables,
+                null,
+                null,
+                null,
+                null,
+                null
+            )
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package xyz.xandsoft.diuerp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,8 @@ import xyz.xandsoft.diuerp.repositories.network.FirebaseRepository
 import xyz.xandsoft.diuerp.utils.hideProgressbar
 import xyz.xandsoft.diuerp.utils.showProgressbar
 import xyz.xandsoft.diuerp.utils.showShortToast
+
+private const val TAG = "RegisterFragment"
 
 class RegisterFragment : Fragment() {
 
@@ -74,6 +77,7 @@ class RegisterFragment : Fragment() {
                         override fun onAuthFailed(messge: String) {
                             progressBar.hideProgressbar()
                             activity?.showShortToast(messge)
+                            Log.e(TAG, "onAuthFailed: $messge")
                         }
                     }, userDataModel, password)
                 }
