@@ -13,28 +13,13 @@ import xyz.xandsoft.diuerp.ui.fragments.ScannerFragment
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
-    private lateinit var mainProductAdd: FloatingActionButton
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        init()
-
-        supportFragmentManager.beginTransaction().replace(R.id.main_container, MainFragment())
+        supportFragmentManager.beginTransaction().add(R.id.main_container, MainFragment())
             .commit()
 
-        mainProductAdd.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, ScannerFragment())
-                .addToBackStack("")
-                .commit()
-        }
-    }
-
-    private fun init() {
-
-        mainProductAdd = findViewById(R.id.main_product_add)
     }
 
     override fun onClick(view: View) {

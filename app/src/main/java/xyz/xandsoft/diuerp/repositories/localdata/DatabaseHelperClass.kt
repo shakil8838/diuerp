@@ -58,6 +58,7 @@ class DatabaseHelperClass(private val context: Context) {
         val PRODUCT_TABLE_NAME = "product_table"
         val COLUMN_ID = "id"
         val COLUMN_PRODUCT_NAME = "product_name"
+        val COLUMN_PRODUCT_CODE = "product_code"
         val COLUMN_PRODUCT_PRICE = "product_price"
         val COLUMN_PRODUCT_INSTOCK = "in_stock"
         val COLUMN_PRODUCT_BUYING_DATE = "buying_date"
@@ -72,7 +73,7 @@ class DatabaseHelperClass(private val context: Context) {
         override fun onCreate(sqLiteDatabase: SQLiteDatabase?) {
             val queryProductTable =
                 "CREATE TABLE $PRODUCT_TABLE_NAME($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                        "$COLUMN_PRODUCT_NAME VARCHAR(128), $COLUMN_PRODUCT_PRICE INTEGER, " +
+                        "$COLUMN_PRODUCT_NAME VARCHAR(128), $COLUMN_PRODUCT_CODE VARCHAR(56), $COLUMN_PRODUCT_PRICE INTEGER, " +
                         "$COLUMN_PRODUCT_INSTOCK INTEGER, $COLUMN_PRODUCT_BUYING_DATE VARCHAR(10), " +
                         "$COLUMN_TOTAL_PURCHASE_AMOUNT INTEGER);"
 
