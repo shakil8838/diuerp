@@ -8,6 +8,6 @@ data class ProductDataModel(
     val product_name: String,
     val product_price: Int,
     val in_stock: Int,
-    val buying_date: Int,
+    val buying_date: String,
     val total_purchase_amount: Int
 )

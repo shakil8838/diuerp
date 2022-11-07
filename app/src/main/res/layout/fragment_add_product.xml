@@ -15,10 +15,10 @@
             android:id="@+id/add_pcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:padding="12dip"
             android:background="@android:color/darker_gray"
-            android:textColor="@color/colorBlack" />
+            android:padding="12dip"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/add_pname"
@@ -33,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dip"
-            android:hint="Product price" />
+            android:hint="Product price"
+            android:inputType="number" />
 
 
         <EditText
@@ -41,7 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dip"
-            android:hint="Purchased quantity" />
+            android:hint="Purchased quantity"
+            android:inputType="number" />
 
 
         <EditText
@@ -57,7 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dip"
-            android:hint="Total purchase amount" />
+            android:hint="Total purchase amount"
+            android:inputType="number" />
 
         <Button
             android:id="@+id/add_btn"

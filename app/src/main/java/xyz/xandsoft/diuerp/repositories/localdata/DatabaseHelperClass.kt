@@ -19,7 +19,30 @@ class DatabaseHelperClass(private val context: Context) {
     suspend fun insertIntoProductTable(productDataModel: ProductDataModel) {
         withContext(Dispatchers.IO) {
             val contentValues = ContentValues()
-
+            contentValues.put(
+                databaseHelper.COLUMN_PRODUCT_CODE,
+                productDataModel.productCode
+            )
+            contentValues.put(
+                databaseHelper.COLUMN_PRODUCT_NAME,
+                productDataModel.product_name
+            )
+            contentValues.put(
+                databaseHelper.COLUMN_PRODUCT_PRICE,
+                productDataModel.product_price
+            )
+            contentValues.put(
+                databaseHelper.COLUMN_PRODUCT_INSTOCK,
+                productDataModel.in_stock
+            )
+            contentValues.put(
+                databaseHelper.COLUMN_PRODUCT_BUYING_DATE,
+                productDataModel.buying_date
+            )
+            contentValues.put(
+                databaseHelper.COLUMN_TOTAL_PURCHASE_AMOUNT,
+                productDataModel.total_purchase_amount
+            )
             writableDatabase.insert(databaseHelper.PRODUCT_TABLE_NAME, null, contentValues)
         }
     }
@@ -35,8 +58,12 @@ class DatabaseHelperClass(private val context: Context) {
 
         val retrieveTables = arrayOf(
             databaseHelper.COLUMN_ID,
+            databaseHelper.COLUMN_PRODUCT_CODE,
             databaseHelper.COLUMN_PRODUCT_NAME,
-            databaseHelper.COLUMN_PRODUCT_INSTOCK
+            databaseHelper.COLUMN_PRODUCT_PRICE,
+            databaseHelper.COLUMN_PRODUCT_INSTOCK,
+            databaseHelper.COLUMN_PRODUCT_BUYING_DATE,
+            databaseHelper.COLUMN_TOTAL_PURCHASE_AMOUNT
         )
 
         return withContext(Dispatchers.IO) {
