@@ -79,6 +79,12 @@ class DatabaseHelperClass(private val context: Context) {
         }
     }
 
+    suspend fun runRAWQuery(query: String): Cursor {
+        return withContext(Dispatchers.IO) {
+            readableDatabase.rawQuery(query, null)
+        }
+    }
+
 
     inner class DatabaseHelper : SQLiteOpenHelper(context, "accounts_db", null, 1) {
 

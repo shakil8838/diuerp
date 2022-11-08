@@ -53,10 +53,10 @@ class MainFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
 
             val cursor = databaseHelperClass.getAllItems()
-            val list = ArrayList<ProductDataModel>()
+            val listOfProducts = ArrayList<ProductDataModel>()
 
             while (cursor.moveToNext()) {
-                list.add(
+                listOfProducts.add(
                     ProductDataModel(
                         cursor.getInt(cursor.getColumnIndex(databaseHelperClass.DatabaseHelper().COLUMN_ID)),
                         cursor.getString(cursor.getColumnIndex(databaseHelperClass.DatabaseHelper().COLUMN_PRODUCT_CODE)),
@@ -69,6 +69,9 @@ class MainFragment : Fragment() {
                 )
             }
 
+            val productListAdapter = ProductListAdapter(requireActivity(), listOfProducts)
+            mainProductList.adapter = productListAdapter
+            productListAdapter.notifyDataSetChanged()
 
 
         }
