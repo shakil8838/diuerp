@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import xyz.xandsoft.diuerp.R
 import xyz.xandsoft.diuerp.repositories.datamodels.ProductDataModel
 import xyz.xandsoft.diuerp.ui.activities.MainActivity
+import xyz.xandsoft.diuerp.ui.fragments.AddProductFragment
 import xyz.xandsoft.diuerp.ui.fragments.SingleProductFragment
 
 class ProductListAdapter(
@@ -32,8 +33,9 @@ class ProductListAdapter(
 
         holder.itemView.setOnClickListener {
             val theBundle = Bundle()
-            val singleProductFragment = SingleProductFragment()
             theBundle.putString("pid", productModelList[position].id.toString())
+            val singleProductFragment = SingleProductFragment()
+            singleProductFragment.arguments = theBundle
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container, singleProductFragment)
                 .addToBackStack(null)

@@ -2,8 +2,9 @@ package xyz.xandsoft.diuerp.repositories.datamodels
 
 data class SellDataModel(
     val id: Int?,
-    val product_id: String,
-    val selling_quantity: String,
-    val selling_price: String,
-    val selling_amount: String
+    val productId: String,
+    val sellingQuantity: String,
+    val sellingPrice: String,
+    val sellingAmount: String,
+    val sellingDate: String
 )

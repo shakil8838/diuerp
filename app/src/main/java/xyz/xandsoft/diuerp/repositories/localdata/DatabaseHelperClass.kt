@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import xyz.xandsoft.diuerp.repositories.datamodels.ProductDataModel
+import xyz.xandsoft.diuerp.repositories.datamodels.SellDataModel
 
 class DatabaseHelperClass(private val context: Context) {
 
@@ -47,9 +48,14 @@ class DatabaseHelperClass(private val context: Context) {
         }
     }
 
-    suspend fun insertIntoSellTable() {
+    suspend fun insertIntoSellTable(sellDataModel: SellDataModel) {
         withContext(Dispatchers.IO) {
             val contentValues = ContentValues()
+            contentValues.put(databaseHelper.COLUMN_PRODUCT_ID, sellDataModel.productId)
+            contentValues.put(databaseHelper.COLUMN_SELLING_QUANTITY, sellDataModel.sellingQuantity)
+            contentValues.put(databaseHelper.COLUMN_SELLING_PRICE, sellDataModel.sellingPrice)
+            contentValues.put(databaseHelper.COLUMN_SELL_AMOUNT, sellDataModel.sellingAmount)
+            contentValues.put(databaseHelper.COLUMN_SELL_DATE, sellDataModel.sellingDate)
             writableDatabase.insert(databaseHelper.SELL_TABLE, null, contentValues)
         }
     }
@@ -102,6 +108,7 @@ class DatabaseHelperClass(private val context: Context) {
         val COLUMN_SELLING_QUANTITY = "selling_quantity"
         val COLUMN_SELLING_PRICE = "selling_price"
         val COLUMN_SELL_AMOUNT = "selling_amount"
+        val COLUMN_SELL_DATE = "selling_date"
 
         override fun onCreate(sqLiteDatabase: SQLiteDatabase?) {
             val queryProductTable =
@@ -113,7 +120,7 @@ class DatabaseHelperClass(private val context: Context) {
             val querySellTable =
                 "CREATE TABLE $SELL_TABLE($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                         "$COLUMN_PRODUCT_ID INTEGER, $COLUMN_SELLING_QUANTITY INTEGER, " +
-                        "$COLUMN_SELLING_PRICE INTEGER, $COLUMN_SELL_AMOUNT INTEGER);"
+                        "$COLUMN_SELLING_PRICE INTEGER, $COLUMN_SELL_AMOUNT INTEGER, $COLUMN_SELL_DATE VARCHAR(10));"
 
             sqLiteDatabase?.execSQL(queryProductTable)
             sqLiteDatabase?.execSQL(querySellTable)
