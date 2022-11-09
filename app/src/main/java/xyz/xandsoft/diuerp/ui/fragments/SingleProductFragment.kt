@@ -105,6 +105,13 @@ class SingleProductFragment : Fragment() {
                     date
                 )
             )
+
+            databaseHelperClass.runRAWQuery(
+                "UPDATE ${databaseHelperClass.DatabaseHelper().PRODUCT_TABLE_NAME} " +
+                        "SET ${databaseHelperClass.DatabaseHelper().COLUMN_PRODUCT_INSTOCK} = " +
+                        "${databaseHelperClass.DatabaseHelper().COLUMN_PRODUCT_INSTOCK} - " +
+                        "$quantity WHERE ${databaseHelperClass.DatabaseHelper().COLUMN_ID} = $productId;"
+            )
             theDialog.dismiss()
             loadAdapter()
         }
